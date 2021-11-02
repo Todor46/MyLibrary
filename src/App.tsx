@@ -12,13 +12,16 @@ import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import RootNavigator from './core/navigation/RootNavigator';
+import { Provider as PaperProvider } from 'react-native-paper';
 
 const App = () => {
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
-        <RootNavigator />
-      </NavigationContainer>
+      <PaperProvider>
+        <NavigationContainer>
+          <RootNavigator />
+        </NavigationContainer>
+      </PaperProvider>
     </SafeAreaProvider>
   );
 };
