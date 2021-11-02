@@ -12,6 +12,8 @@ target 'MyLibrary' do
     :hermes_enabled => false
   )
 
+  pod 'RealmJS', :path => '../node_modules/realm'
+
   target 'MyLibraryTests' do
     inherit! :complete
     # Pods for testing
