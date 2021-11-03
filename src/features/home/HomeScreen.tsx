@@ -1,15 +1,17 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { ScrollView, Text } from 'react-native';
+import { ScrollView, StyleSheet, Text } from 'react-native';
 import { IconButton } from 'react-native-paper';
+import BookItem from '../../core/components/BookItem';
 import useRealm from '../../core/hooks/useRealm';
 import { RootStackParamList } from '../../core/navigation/RootNavigator';
+import { Book } from '../../core/schemas/BookSchema';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 const HomeScreen = ({ navigation }: Props) => {
   const [books, setBooks] = useState<
-    Realm.Results<Realm.Object> | Object[] | undefined
+    Realm.Results<Realm.Object> | Book[] | undefined
   >();
   const realm = useRealm();
 
@@ -36,11 +38,18 @@ const HomeScreen = ({ navigation }: Props) => {
   }, [navigation]);
 
   return (
-    <ScrollView>
-      <Text>Hello</Text>
-      <Text>{JSON.stringify(books, null, 2)}</Text>
+    <ScrollView style={style.container}>
+      {books?.map((book) => (
+        <BookItem key={book._id} book={book} />
+      ))}
     </ScrollView>
   );
 };
 
 export default HomeScreen;
+
+const style = StyleSheet.create({
+  container: {
+    padding: 8,
+  },
+});
