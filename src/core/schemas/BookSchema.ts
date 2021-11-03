@@ -1,7 +1,7 @@
 export const BookSchema = {
   name: 'Book',
   properties: {
-    _id: 'int',
+    _id: 'string',
     title: 'string',
     author: 'string',
     read: 'bool',
@@ -9,3 +9,20 @@ export const BookSchema = {
   },
   primaryKey: '_id',
 };
+
+export interface Book {
+  _id: string;
+  title: string;
+  author: string;
+  read: boolean;
+  genre: Genre;
+}
+
+export type Genre =
+  | 'Classic'
+  | 'Comic Book'
+  | 'Mystery'
+  | 'Fantasy'
+  | 'Horror'
+  | 'Romance'
+  | 'Science Fiction';

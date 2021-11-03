@@ -13,16 +13,12 @@ import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import RootNavigator from './core/navigation/RootNavigator';
 import { Provider as PaperProvider } from 'react-native-paper';
-import Realm from 'realm';
-import { BookSchema } from './core/schemas/BookSchema';
 import RealmProvider from './core/providers/RealmProvider';
 
 const App = () => {
-  const realm = new Realm({ schema: [BookSchema] });
-
   return (
     <SafeAreaProvider>
-      <RealmProvider realm={realm}>
+      <RealmProvider>
         <PaperProvider>
           <NavigationContainer>
             <RootNavigator />
