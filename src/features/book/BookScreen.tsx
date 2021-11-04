@@ -49,6 +49,7 @@ const BookScreen = ({ route, navigation }: Props) => {
       <View style={style.container}>
         <Title style={style.title}>{book?.title}</Title>
         {!!book?.author && <Text>By {book?.author}</Text>}
+        <Text>Read? {book?.read ? 'Yes :)' : 'No :('}</Text>
         <TouchableOpacity
           onPress={() => navigation.navigate('Genre', { genre: book?.genre })}>
           <Text style={style.genre}>{book?.genre}</Text>
