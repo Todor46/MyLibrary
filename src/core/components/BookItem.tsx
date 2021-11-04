@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/core';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Title } from 'react-native-paper';
+import { Surface, Title } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Book } from '../schemas/BookSchema';
 
@@ -14,7 +14,7 @@ const BookItem = ({
   const { navigate } = useNavigation<NativeStackNavigationProp<any, any>>();
 
   return (
-    <View style={style.container}>
+    <Surface style={style.container}>
       <TouchableOpacity onPress={() => navigate('Book', { _id })}>
         <>
           <View style={style.row}>
@@ -31,7 +31,7 @@ const BookItem = ({
           </View>
         </>
       </TouchableOpacity>
-    </View>
+    </Surface>
   );
 };
 
@@ -45,8 +45,8 @@ const style = StyleSheet.create({
     marginBottom: 8,
     flexGrow: 0,
     borderColor: '#cccccc',
-    borderWidth: 1,
     backgroundColor: '#ffffff',
+    elevation: 4,
   },
   title: {
     fontSize: 20,
