@@ -18,16 +18,10 @@ const HomeScreen = ({ navigation }: Props) => {
         <IconButton
           icon="plus"
           onPress={() => navigation.navigate('NewBook')}
-          hasTVPreferredFocus={undefined}
-          tvParallaxProperties={undefined}
         />
       ),
     });
   }, [navigation]);
-
-  const renderItem = ({ item }: { item: Book }) => {
-    return <BookItem book={item} />;
-  };
 
   return (
     <FlatList
@@ -39,10 +33,15 @@ const HomeScreen = ({ navigation }: Props) => {
   );
 };
 
-export default HomeScreen;
+const renderItem = ({ item }: { item: Book }) => {
+  return <BookItem book={item} />;
+};
 
 const style = StyleSheet.create({
   container: {
     padding: 8,
   },
 });
+
+export default HomeScreen;
+export { renderItem };
