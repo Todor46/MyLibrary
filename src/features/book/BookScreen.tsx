@@ -1,8 +1,9 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { IconButton, Title } from 'react-native-paper';
+import { Button, Dialog, IconButton, Title } from 'react-native-paper';
 import useBooks from '../../core/hooks/useBooks';
+import realm from '../../core/lib/realm';
 import { RootStackParamList } from '../../core/navigation/RootNavigator';
 import { Book } from '../../core/schemas/BookSchema';
 
@@ -10,6 +11,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Book'>;
 
 const BookScreen = ({ route, navigation }: Props) => {
   const [book, setBook] = useState<Book | undefined>();
+  const [deleteDialog, setDeleteDialog] = useState<boolean>(false);
   const { _id } = route.params;
   const { books } = useBooks();
 
@@ -23,7 +25,10 @@ const BookScreen = ({ route, navigation }: Props) => {
       headerRight: () => (
         <View style={style.icons}>
           <IconButton icon="circle-edit-outline" onPress={() => handleEdit()} />
-          <IconButton icon="trash-can-outline" onPress={() => handleDelete()} />
+          <IconButton
+            icon="trash-can-outline"
+            onPress={() => setDeleteDialog(true)}
+          />
         </View>
       ),
     });
@@ -31,17 +36,35 @@ const BookScreen = ({ route, navigation }: Props) => {
   }, []);
 
   const handleEdit = () => {};
-  const handleDelete = () => {};
+
+  const handleDelete = () => {
+    realm.write(() => {
+      realm.delete(book);
+    });
+    navigation.navigate('Home');
+  };
 
   return (
-    <View style={style.container}>
-      <Title style={style.title}>{book?.title}</Title>
-      {!!book?.author && <Text>By {book?.author}</Text>}
-      <TouchableOpacity
-        onPress={() => navigation.navigate('Genre', { genre: book?.genre })}>
-        <Text style={style.genre}>{book?.genre}</Text>
-      </TouchableOpacity>
-    </View>
+    <>
+      <View style={style.container}>
+        <Title style={style.title}>{book?.title}</Title>
+        {!!book?.author && <Text>By {book?.author}</Text>}
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Genre', { genre: book?.genre })}>
+          <Text style={style.genre}>{book?.genre}</Text>
+        </TouchableOpacity>
+      </View>
+      <Dialog visible={deleteDialog} onDismiss={() => setDeleteDialog(false)}>
+        <Dialog.Title>Deleting {book?.title}</Dialog.Title>
+        <Dialog.Content>
+          <Text> Are you sure you want to delete {book?.title}?</Text>
+        </Dialog.Content>
+        <Dialog.Actions>
+          <Button onPress={() => setDeleteDialog(false)}>Canel</Button>
+          <Button onPress={() => handleDelete()}>Ok</Button>
+        </Dialog.Actions>
+      </Dialog>
+    </>
   );
 };
 
