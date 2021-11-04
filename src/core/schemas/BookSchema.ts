@@ -10,7 +10,7 @@ export const BookSchema = {
   primaryKey: '_id',
 };
 
-export interface Book {
+export interface Book extends Realm.Object {
   _id: string;
   title: string;
   author: string;

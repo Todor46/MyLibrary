@@ -1,28 +1,16 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import React, { useLayoutEffect } from 'react';
+import { FlatList, StyleSheet } from 'react-native';
 import { IconButton } from 'react-native-paper';
 import BookItem from '../../core/components/BookItem';
-import useRealm from '../../core/hooks/useRealm';
+import useBooks from '../../core/hooks/useBooks';
 import { RootStackParamList } from '../../core/navigation/RootNavigator';
 import { Book } from '../../core/schemas/BookSchema';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 const HomeScreen = ({ navigation }: Props) => {
-  const [books, setBooks] = useState<
-    Realm.Results<Realm.Object> | Book[] | undefined
-  >();
-  const realm = useRealm();
-
-  useEffect(() => {
-    const data = realm?.objects('Book');
-    setBooks(data);
-
-    data?.addListener(() => setBooks([...data]));
-
-    return () => data?.removeAllListeners();
-  }, [realm]);
+  const { books } = useBooks();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -37,12 +25,17 @@ const HomeScreen = ({ navigation }: Props) => {
     });
   }, [navigation]);
 
+  const renderItem = ({ item }: { item: Book }) => {
+    return <BookItem book={item} />;
+  };
+
   return (
-    <ScrollView style={style.container}>
-      {books?.map((book) => (
-        <BookItem key={book._id} book={book} />
-      ))}
-    </ScrollView>
+    <FlatList
+      data={books}
+      keyExtractor={(book) => book._id}
+      renderItem={renderItem}
+      style={style.container}
+    />
   );
 };
 

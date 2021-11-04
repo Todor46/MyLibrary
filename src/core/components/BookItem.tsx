@@ -1,15 +1,23 @@
+import { useNavigation } from '@react-navigation/core';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Book } from '../schemas/BookSchema';
 
-const BookItem = ({ book: { title, author, genre } }: { book: Book }) => {
+const BookItem = ({ book: { title, author, genre, _id } }: { book: Book }) => {
+  const { navigate } = useNavigation<NativeStackNavigationProp<any, any>>();
+
   return (
     <View style={style.container}>
-      <Text style={style.title}>{title}</Text>
-      <View style={style.bottom}>
-        <Text style={style.author}>{author}</Text>
-        <Text style={style.genre}>{genre}</Text>
-      </View>
+      <TouchableOpacity onPress={() => navigate('Book', { _id })}>
+        <>
+          <Text style={style.title}>{title}</Text>
+          <View style={style.bottom}>
+            <Text style={style.author}>{author}</Text>
+            <Text style={style.genre}>{genre}</Text>
+          </View>
+        </>
+      </TouchableOpacity>
     </View>
   );
 };

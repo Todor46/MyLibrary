@@ -3,11 +3,11 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useRef, useState } from 'react';
 import { StyleSheet, TextInput as RNTextInput, View } from 'react-native';
 import { Button, Checkbox, Text, TextInput } from 'react-native-paper';
-import useRealm from '../../core/hooks/useRealm';
 import { RootStackParamList } from '../../core/navigation/RootNavigator';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 import genres from '../../core/constants/genres';
+import realm from '../../core/lib/realm';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'NewBook'>;
 
@@ -24,8 +24,6 @@ const NewBookScreen = ({ navigation }: Props) => {
   const handleChange = (type: string, value: string | boolean) => {
     setFormData({ ...formData, [type]: value });
   };
-
-  const realm = useRealm();
 
   const handleAdd = () => {
     if (!title.length && titleRef.current) {

@@ -6,7 +6,7 @@ import NewBookScreen from '../../features/newBook/NewBookScreen';
 
 export type RootStackParamList = {
   Home: undefined;
-  Book: { id: number };
+  Book: { _id: string };
   NewBook: undefined;
 };
 

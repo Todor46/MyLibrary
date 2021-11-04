@@ -9,22 +9,40 @@
  */
 
 import { NavigationContainer } from '@react-navigation/native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import RootNavigator from './core/navigation/RootNavigator';
 import { Provider as PaperProvider } from 'react-native-paper';
-import RealmProvider from './core/providers/RealmProvider';
+import realm from './core/lib/realm';
+import { Book } from './core/schemas/BookSchema';
+import BooksContext from './core/contexts/BooksContext';
 
 const App = () => {
+  const [books, setBooks] = useState<Book[]>([]);
+
+  useEffect(() => {
+    const data = realm.objects<Book>('Book');
+    setBooks([...data]);
+
+    data.addListener(() => {
+      setBooks([...data]);
+    });
+
+    return () => {
+      data.removeAllListeners();
+      realm.close();
+    };
+  }, []);
+
   return (
     <SafeAreaProvider>
-      <RealmProvider>
+      <BooksContext.Provider value={{ books }}>
         <PaperProvider>
           <NavigationContainer>
             <RootNavigator />
           </NavigationContainer>
         </PaperProvider>
-      </RealmProvider>
+      </BooksContext.Provider>
     </SafeAreaProvider>
   );
 };
