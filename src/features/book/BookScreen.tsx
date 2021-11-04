@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { IconButton } from 'react-native-paper';
+import { IconButton, Title } from 'react-native-paper';
 import useBooks from '../../core/hooks/useBooks';
 import { RootStackParamList } from '../../core/navigation/RootNavigator';
 import { Book } from '../../core/schemas/BookSchema';
@@ -35,7 +35,7 @@ const BookScreen = ({ route, navigation }: Props) => {
 
   return (
     <View style={style.container}>
-      <Text style={style.title}>{book?.title}</Text>
+      <Title style={style.title}>{book?.title}</Title>
       {!!book?.author && <Text>By {book?.author}</Text>}
       <TouchableOpacity
         onPress={() => navigation.navigate('Genre', { genre: book?.genre })}>

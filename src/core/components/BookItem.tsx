@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/core';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Title } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Book } from '../schemas/BookSchema';
 
@@ -17,7 +18,7 @@ const BookItem = ({
       <TouchableOpacity onPress={() => navigate('Book', { _id })}>
         <>
           <View style={style.row}>
-            <Text style={style.title}>{title}</Text>
+            <Title style={style.title}>{title}</Title>
             {read ? (
               <Icon style={style.iconRead} name="check-circle-outline" />
             ) : (
