@@ -29,8 +29,8 @@ const App = () => {
     });
 
     return () => {
-      data.removeAllListeners();
-      realm.close();
+      // data.removeAllListeners();
+      // realm.close();
     };
   }, []);
 
