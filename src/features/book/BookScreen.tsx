@@ -54,10 +54,14 @@ const BookScreen = ({ route, navigation }: Props) => {
         <Title style={style.title}>{book?.title}</Title>
         {!!book?.author && <Text>By {book?.author}</Text>}
         <Text>Read? {book?.read ? 'Yes :)' : 'No :('}</Text>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Genre', { genre: book?.genre })}>
-          <Text style={style.genre}>{book?.genre}</Text>
-        </TouchableOpacity>
+        {!!book.genre && (
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('Genre', { genre: book?.genre })
+            }>
+            <Text style={style.genre}>{book?.genre}</Text>
+          </TouchableOpacity>
+        )}
       </View>
       <Dialog visible={deleteDialog} onDismiss={() => setDeleteDialog(false)}>
         <Dialog.Title>Deleting {book?.title}</Dialog.Title>
