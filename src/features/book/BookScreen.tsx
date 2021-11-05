@@ -1,7 +1,8 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Button, Dialog, IconButton, Title } from 'react-native-paper';
+import Snackbar from 'react-native-snackbar';
 import useBooks from '../../core/hooks/useBooks';
 import realm from '../../core/lib/realm';
 import { RootStackParamList } from '../../core/navigation/RootNavigator';
@@ -14,6 +15,7 @@ const BookScreen = ({ route, navigation }: Props) => {
   const { _id } = route.params;
   const { books } = useBooks();
   const book = books.find((b) => b._id === _id) as Book;
+  const bookTitle = useRef(book.title);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -38,6 +40,10 @@ const BookScreen = ({ route, navigation }: Props) => {
   const handleDelete = () => {
     realm.write(() => {
       realm.delete(book);
+    });
+    Snackbar.show({
+      text: `${bookTitle.current} deleted!`,
+      duration: 3000,
     });
     navigation.navigate('Home');
   };

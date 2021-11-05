@@ -8,6 +8,7 @@ import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 import genres from '../../core/constants/genres';
 import realm from '../../core/lib/realm';
+import Snackbar from 'react-native-snackbar';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'NewBook'>;
 
@@ -39,6 +40,10 @@ const NewBookScreen = ({ navigation }: Props) => {
     };
     realm?.write(() => {
       realm.create('Book', book);
+    });
+    Snackbar.show({
+      text: 'Book added',
+      duration: 3000,
     });
     navigation.navigate('Home');
   };

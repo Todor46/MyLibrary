@@ -9,6 +9,7 @@ import genres from '../../core/constants/genres';
 import realm from '../../core/lib/realm';
 import useBooks from '../../core/hooks/useBooks';
 import { Book, Genre } from '../../core/schemas/BookSchema';
+import Snackbar from 'react-native-snackbar';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'EditBook'>;
 
@@ -60,6 +61,10 @@ const EditBookScreen = ({ navigation, route }: Props) => {
         book.genre = genre;
         book.read = read;
       });
+    Snackbar.show({
+      text: 'Edit successful!',
+      duration: 3000,
+    });
     navigation.navigate('Home');
   };
 
