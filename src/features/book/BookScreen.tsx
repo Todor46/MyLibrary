@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Button, Dialog, IconButton, Title } from 'react-native-paper';
 import useBooks from '../../core/hooks/useBooks';
@@ -10,14 +10,10 @@ import { Book } from '../../core/schemas/BookSchema';
 type Props = NativeStackScreenProps<RootStackParamList, 'Book'>;
 
 const BookScreen = ({ route, navigation }: Props) => {
-  const [book, setBook] = useState<Book | undefined>();
   const [deleteDialog, setDeleteDialog] = useState<boolean>(false);
   const { _id } = route.params;
   const { books } = useBooks();
-
-  useEffect(() => {
-    setBook(books.find((b) => b._id === _id));
-  }, [books, _id]);
+  const book = books.find((b) => b._id === _id) as Book;
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -35,7 +31,9 @@ const BookScreen = ({ route, navigation }: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleEdit = () => {};
+  const handleEdit = () => {
+    navigation.navigate('EditBook', { _id: book._id });
+  };
 
   const handleDelete = () => {
     realm.write(() => {

@@ -19,6 +19,7 @@ export interface Book extends Realm.Object {
 }
 
 export type Genre =
+  | ''
   | 'Classic'
   | 'Comic Book'
   | 'Mystery'
