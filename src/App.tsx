@@ -16,6 +16,8 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import realm from './core/lib/realm';
 import { Book } from './core/schemas/BookSchema';
 import BooksContext from './core/contexts/BooksContext';
+import { useColorScheme } from 'react-native';
+import { getNavigationTheme, getPaperTheme } from './theme';
 
 const App = () => {
   const [books, setBooks] = useState<Book[]>([]);
@@ -34,11 +36,13 @@ const App = () => {
     };
   }, []);
 
+  const colorScheme = useColorScheme() === 'dark';
+
   return (
     <SafeAreaProvider>
       <BooksContext.Provider value={{ books }}>
-        <PaperProvider>
-          <NavigationContainer>
+        <PaperProvider theme={getPaperTheme(colorScheme)}>
+          <NavigationContainer theme={getNavigationTheme(colorScheme)}>
             <RootNavigator />
           </NavigationContainer>
         </PaperProvider>

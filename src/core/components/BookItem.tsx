@@ -45,14 +45,12 @@ const style = StyleSheet.create({
     marginBottom: 8,
     flexGrow: 0,
     borderColor: '#cccccc',
-    backgroundColor: '#ffffff',
     elevation: 4,
   },
   title: {
     fontSize: 20,
     marginBottom: 8,
     fontWeight: '600',
-    color: '#444444',
   },
   author: {
     fontSize: 14,
