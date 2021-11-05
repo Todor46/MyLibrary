@@ -27,7 +27,7 @@ const HomeScreen = ({ navigation }: Props) => {
   }, [navigation]);
 
   return (
-    <View>
+    <View style={style.container}>
       <MaterialTabs
         items={['All', 'Unread']}
         selectedIndex={selectedTab}
@@ -37,7 +37,7 @@ const HomeScreen = ({ navigation }: Props) => {
         data={selectedTab === 0 ? books : books.filter((book) => !book.read)}
         keyExtractor={(book) => book._id}
         renderItem={renderItem}
-        style={style.container}
+        style={style.list}
       />
     </View>
   );
@@ -48,8 +48,11 @@ const renderItem = ({ item }: { item: Book }) => {
 };
 
 const style = StyleSheet.create({
-  container: {
+  list: {
     padding: 8,
+  },
+  container: {
+    flex: 1,
   },
 });
 

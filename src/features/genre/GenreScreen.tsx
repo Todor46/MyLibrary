@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useEffect } from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import useBooks from '../../core/hooks/useBooks';
 import { RootStackParamList } from '../../core/navigation/RootNavigator';
 import { renderItem } from '../home/HomeScreen';
@@ -17,12 +17,13 @@ const GenreScreen = ({ route, navigation }: Props) => {
   }, []);
 
   return (
-    <FlatList
-      data={books.filter((book) => book.genre === genre)}
-      keyExtractor={(b) => b._id}
-      renderItem={renderItem}
-      style={s.container}
-    />
+    <View style={s.container}>
+      <FlatList
+        data={books.filter((book) => book.genre === genre)}
+        keyExtractor={(b) => b._id}
+        renderItem={renderItem}
+      />
+    </View>
   );
 };
 
@@ -30,6 +31,7 @@ export default GenreScreen;
 
 const s = StyleSheet.create({
   container: {
+    flex: 1,
     padding: 10,
   },
 });
