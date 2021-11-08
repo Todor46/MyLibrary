@@ -154,9 +154,9 @@ android {
         }
         release {
             storeFile rootProject.file("app/my-upload-key.keystore")
-            storePassword System.getProperty("KEYSTORE_PASSWORD")
-            keyAlias System.getProperty("KEY_ALIAS")
-            keyPassword System.getProperty("KEY_PASSWORD")
+            storePassword System.getProperty("APPCENTER_KEYSTORE_PASSWORD")
+            keyAlias System.getProperty("APPCENTER_KEY_ALIAS")
+            keyPassword System.getProperty("APPCENTER_KEY_PASSWORD")
         }
     }
     buildTypes {
